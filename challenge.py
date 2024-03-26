@@ -34,27 +34,44 @@ menu += "1 - add_prefix_un\n"
 menu += "2 - make_word_groups\n"
 menu += "3 - remove_suffix_ness\n"
 menu += "4 - adjective_to_verb\n"
+menu += "e - exit program\n"
 menu += ":"
 
-option = input(menu)
-if option == "1":
-    word = input("Please enter a word for the prefix -un:")
-    print(add_prefix_un(word))
-elif option == "2":
-    prefix = input("Please enter the prefix of the vocab_words array:")
-    words = input("Please enter the words of the vocab_words array seperated by a space:")
-    vocab_words = []
-    vocab_words.append(prefix)
-    words_array = words.split(" ")
-    for w in words_array:
-        vocab_words.append(w)
-    print(make_word_groups(vocab_words))
-elif option == "3":
-    word = input("Please enter a word with the suffix -ness:")
-    print(remove_suffix_ness(word))
-elif option == "4":
-    sentence = input("Please enter a sentence that contains an adjective:")
-    index = input("Please enter the index of the adjective in sentence:")
-    print(adjective_to_verb(sentence, int(index)))
-else:
-    print(f"{option} is not a menu option")
+while True:
+
+    option = input(menu)
+    if option == "1":
+        word = input("Please enter a word for the prefix -un:")
+        print(add_prefix_un(word)+"\n")
+    elif option == "2":
+        prefix = input("Please enter the prefix of the vocab_words array:")
+        words = input("Please enter the words of the vocab_words array seperated by a space:")
+        vocab_words = []
+        vocab_words.append(prefix)
+        words_array = words.split(" ")
+        for w in words_array:
+            vocab_words.append(w)
+        print(make_word_groups(vocab_words)+"\n")
+    elif option == "3":
+        while True:
+            word = input("Please enter a word with the suffix -ness:")
+            result = regex.sub('', word)
+            if result[-4:] == "ness":
+                print(remove_suffix_ness(word)+"\n")
+                break
+            else:
+                print(f"{result} does not end in suffix -ness. Try again\n")
+    elif option == "4":
+        sentence = input("Please enter a sentence that contains an adjective:")
+        while True:
+            try:
+                index = input("Please enter the index of the adjective in sentence:")
+                print(adjective_to_verb(sentence, int(index))+"\n")
+                break
+            except IndexError:
+                print(f"{index} is not a valid index for the sentence. Try again \n")
+    elif option == "e":
+        print('Goodbye!!!')
+        exit()
+    else:
+        print(f"{option} is not a menu option. Try again")
